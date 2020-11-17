@@ -12,7 +12,7 @@ DEFAULT_PORT = 5001
 
 
 def new_server(address):
-    '''Factory'''
+    """Factory"""
     address = urllib.parse.urlsplit(address)
     server = Process(target=_FLASK_APP_.run, kwargs={
         'host': address.hostname, 'port': address.port,
@@ -26,7 +26,8 @@ def new_server(address):
 _FLASK_APP_ = Flask(__name__.split('.')[0])
 _APP_DICTS_ = {'default': {}}
 
-#CREACION DE UN DICCIONARIO
+
+# CREACION DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>', methods=['PUT'])
 def create_dict(id):
     if id in _APP_DICTS_:
@@ -34,7 +35,8 @@ def create_dict(id):
     _APP_DICTS_[id] = {}
     return make_response(jsonify({'result': {id: {}}}), 201)
 
-#RESETEO DE UN DICCIONARIO
+
+# RESETEO DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>', methods=['POST'])
 def clear_dict(id):
     if id not in _APP_DICTS_:
@@ -42,14 +44,16 @@ def clear_dict(id):
     _APP_DICTS_[id] = {}
     return make_response(jsonify({'result': {id: {}}}), 200)
 
-#OBTENCION DE UN DICCIONARIO
+
+# OBTENCION DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>', methods=['GET'])
 def get_dict(id):
     if id not in _APP_DICTS_:
         abort(404)
     return make_response(jsonify({'result': _APP_DICTS_[id]}), 200)
 
-#ELIMINACION DE UN DICCIONARIO
+
+# ELIMINACION DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>', methods=['DELETE'])
 def remove_dict(id):
     if id not in _APP_DICTS_:
@@ -57,21 +61,24 @@ def remove_dict(id):
     del _APP_DICTS_[id]
     return make_response('', 204)
 
-#OBTENCION LLAVES DE UN DICCIONARIO
+
+# OBTENCION LLAVES DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>/keys', methods=['GET'])
 def get_keys(id):
     if id not in _APP_DICTS_:
         abort(404)
     return make_response(jsonify({'result': list(_APP_DICTS_[id].keys())}), 200)
 
-#OBTENCION VALORES DE UN DICCIONARIO
+
+# OBTENCION VALORES DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>/values', methods=['GET'])
 def get_values(id):
     if id not in _APP_DICTS_:
         abort(404)
     return make_response(jsonify({'result': list(_APP_DICTS_[id].values())}), 200)
 
-#OBTENCION VALOR DE UNA LLAVE DE UN DICCIONARIO
+
+# OBTENCION VALOR DE UNA LLAVE DE UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>/keys/<key>', methods=['GET'])
 def get_value(id, key):
     if id not in _APP_DICTS_:
@@ -80,10 +87,11 @@ def get_value(id, key):
         abort(404)
     return make_response(jsonify({'result': _APP_DICTS_[id][key]}), 200)
 
-#INSERCION VALOR EN UN DICCIONARIO
+
+# INSERCION VALOR EN UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>/keys/<key>', methods=['PUT'])
 def create_value(id, key):
-    if (not request.data):
+    if not request.data:
         abort(400)
     if id not in _APP_DICTS_:
         abort(404)
@@ -92,17 +100,19 @@ def create_value(id, key):
     _APP_DICTS_[id][key] = request.data.decode()
     return make_response(jsonify({'result': {key: request.data.decode()}}), 201)
 
-#ACTUALIZACION VALOR EN UN DICCIONARIO
+
+# ACTUALIZACION VALOR EN UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>/keys/<key>', methods=['POST'])
 def set_value(id, key):
-    if (not request.data):
+    if not request.data:
         abort(400)
     if id not in _APP_DICTS_:
         abort(404)
     _APP_DICTS_[id][key] = request.data.decode()
     return make_response(jsonify({'result': {key: request.data.decode()}}), 200)
 
-#ELIMINACION VALOR EN UN DICCIONARIO
+
+# ELIMINACION VALOR EN UN DICCIONARIO
 @_FLASK_APP_.route(f'{API_ROOT}/<id>/keys/<key>', methods=['DELETE'])
 def remove_value(id, key):
     if id not in _APP_DICTS_:
@@ -112,10 +122,12 @@ def remove_value(id, key):
     del _APP_DICTS_[id][key]
     return make_response('', 204)
 
+
 class DictServer:
-    '''
+    """
         Flask application container
-    '''
+    """
+
     def __init__(self, server_address):
         self._SERVER_ = new_server(server_address)
         self._started_ = False
@@ -138,18 +150,18 @@ class DictServer:
         self._started_ = False
 
     def __enter__(self):
-        '''
+        """
         Start server
-        '''
+        """
         self.start()
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        '''
+        """
         Stop server
-        '''
+        """
         self.stop()
-        
+
 
 if __name__ == '__main__':
     _FLASK_APP_.run(host='0.0.0.0', port=DEFAULT_PORT, debug=True)

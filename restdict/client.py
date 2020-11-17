@@ -3,9 +3,7 @@
 
 import json
 import pickle
-import random
 import binascii
-import string
 import uuid
 from collections.abc import MutableMapping
 
@@ -93,7 +91,7 @@ class RestDict(MutableMapping):
         result_unmarshall = {}
         for key in result:
             result_unmarshall[key] = _unmarshall_(result[key])
-        return (str(result_unmarshall))
+        return str(result_unmarshall)
 
     def __setitem__(self, key, value):
         if not isinstance(key, str):
