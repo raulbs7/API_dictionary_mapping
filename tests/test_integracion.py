@@ -19,33 +19,33 @@ TEST_DICT = {NEW_KEY: NEW_VALUE, ANOTHER_KEY: ANOTHER_VALUE}
 
 
 class TestIntegration(unittest.TestCase):
-    """
+    '''
     Tests de integracion
-    """
+    '''
 
     def test_check_empty(self):
-        """Un nuevo RestDict esta vacio y es del tipo correcto"""
+        '''Un nuevo RestDict esta vacio y es del tipo correcto'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             self.assertIsInstance(test_dict, restdict.RestDict)
             self.assertEqual(len(test_dict), 0)
 
     def test_keyerror(self):
-        """Acceder con una key que no exista debe provocar una excepcion"""
+        '''Acceder con una key que no exista debe provocar una excepcion'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             with self.assertRaises(KeyError):
                 test_dict[TEST_KEY]
 
     def test_invalid_key(self):
-        """Usar una key que no sea string debe provocar una excepcion"""
+        '''Usar una key que no sea string debe provocar una excepcion'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             with self.assertRaises(TypeError):
                 test_dict[NON_STRING_VALUE] = TEST_VALUE
 
     def test_store_and_get(self):
-        """Almacenar un nuevo valor incrementa la longitud del diccionario en uno (PUT/GET)"""
+        '''Almacenar un nuevo valor incrementa la longitud del diccionario en uno (PUT/GET)'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             self.assertNotIn(TEST_KEY, test_dict)
@@ -56,7 +56,7 @@ class TestIntegration(unittest.TestCase):
             self.assertEqual(test_dict[TEST_KEY], TEST_VALUE)
 
     def test_delete(self):
-        """Eliminar un elemento decrementa la longitug del diccionario"""
+        '''Eliminar un elemento decrementa la longitug del diccionario'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             test_dict[TEST_KEY] = TEST_VALUE
@@ -66,7 +66,7 @@ class TestIntegration(unittest.TestCase):
             self.assertNotIn(TEST_KEY, test_dict)
 
     def test_single_update(self):
-        """Modificar un elemento (POST)"""
+        '''Modificar un elemento (POST)'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             test_dict[TEST_KEY] = TEST_VALUE
@@ -76,7 +76,7 @@ class TestIntegration(unittest.TestCase):
             self.assertEqual(test_dict[TEST_KEY], NEW_VALUE)
 
     def test_multi_update(self):
-        """Metodo update() de diccionarios"""
+        '''Metodo update() de diccionarios'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             test_dict[TEST_KEY] = TEST_VALUE
@@ -90,7 +90,7 @@ class TestIntegration(unittest.TestCase):
             self.assertEqual(test_dict[ANOTHER_KEY], ANOTHER_VALUE)
 
     def test_get(self):
-        """Metodo get() de diccionarios"""
+        '''Metodo get() de diccionarios'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             value = test_dict.get(TEST_KEY, None)
@@ -100,7 +100,7 @@ class TestIntegration(unittest.TestCase):
             self.assertEqual(value, TEST_VALUE)
 
     def test_keys(self):
-        """Metodo keys() de diccionarios"""
+        '''Metodo keys() de diccionarios'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             test_dict[TEST_KEY] = TEST_VALUE
@@ -110,7 +110,7 @@ class TestIntegration(unittest.TestCase):
             self.assertIn(NEW_KEY, test_dict.keys())
 
     def test_values(self):
-        """Metodo values() de diccionarios"""
+        '''Metodo values() de diccionarios'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             test_dict[TEST_KEY] = TEST_VALUE
@@ -120,7 +120,7 @@ class TestIntegration(unittest.TestCase):
             self.assertIn(NEW_VALUE, test_dict.values())
 
     def test_clear(self):
-        """Metodo clear() de diccionarios"""
+        '''Metodo clear() de diccionarios'''
         with restdict.new_server(SERVER_ADDRESS):
             test_dict = restdict.new_client(SERVER_API_URI)
             test_dict[TEST_KEY] = TEST_VALUE

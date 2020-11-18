@@ -32,9 +32,11 @@ class RestDict(MutableMapping):
                 result = requests.get(f'{self._uri_}/{self._id_}')
                 if result.status_code not in [200, 201]:
                     break
-        result = requests.put(f'{self._uri_}/{self._id_}')
+        result = requests.get(f'{self._uri_}/{self._id_}')
         if result.status_code not in [200, 201]:
-            raise ValueError(f'Cannot init dictionary: {result.status_code}')
+            result = requests.put(f'{self._uri_}/{self._id_}')
+            if result.status_code not in [200, 201]:
+                raise ValueError(f'Cannot set dictionary: {result.status_code}')
 
     def keys(self):
         result = requests.get(f'{self._uri_}/{self._id_}/keys')
