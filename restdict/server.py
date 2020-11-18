@@ -117,7 +117,7 @@ def set_value(id, key):
 def remove_value(id, key):
     if id not in _APP_DICTS_:
         abort(404)
-    if key not in _APP_DICTS_:
+    if key not in _APP_DICTS_[id]:
         abort(404)
     del _APP_DICTS_[id][key]
     return make_response('', 204)

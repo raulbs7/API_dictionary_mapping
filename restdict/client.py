@@ -112,12 +112,12 @@ class RestDict(MutableMapping):
 
         if result.status_code == 404:
             raise KeyError(key)
-
+    '''
     def __del__(self):
         result = requests.delete(f'{self._uri_}/{self._id_}')
         if result.status_code == 404:
             raise ValueError(f'Cannot delete dict: {result.status_code}')
-
+    '''
     def clear(self):
         result = requests.post(f'{self._uri_}/{self._id_}')
         if result.status_code not in [200, 201]:

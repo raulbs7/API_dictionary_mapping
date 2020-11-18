@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Tox
+.tox/
+
 # C extensions
 *.so
 
