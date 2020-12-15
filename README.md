@@ -2,6 +2,7 @@
 
 ## Colaboradores
 Raúl Bernalte Sánchez raul.bernalte@alu.uclm.es
+
 Ismael Vélez Recio ismael.velez@alu.uclm.es
 
 Para instalar las dependencias en el entorno virtual (configurado para Python3):
