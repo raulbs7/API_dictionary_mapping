@@ -5,6 +5,7 @@ Raúl Bernalte Sánchez raul.bernalte@alu.uclm.es
 
 Ismael Vélez Recio ismael.velez@alu.uclm.es
 
+## Instalación y ejecución
 Para instalar las dependencias en el entorno virtual (configurado para Python3):
 ```shell
 pip install -r requeriments.txt
